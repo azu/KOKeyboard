@@ -39,5 +39,6 @@
 + (void)applyToTextView:(UITextView *)textView;
 - (void)trackPointMovedX:(int)xdiff Y:(int)ydiff selecting:(BOOL)selecting;
 - (void)trackPointStarted;
-
+- (void)undoAction;
+- (void)redoAction;
 @end
