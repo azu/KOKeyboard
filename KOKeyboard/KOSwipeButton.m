@@ -224,7 +224,7 @@
 }
 
 - (CGFloat)labelFontSize {
-    return 12.0f;
+    return 13.0f;
 }
 
 - (void)selectLabel:(int) idx {
