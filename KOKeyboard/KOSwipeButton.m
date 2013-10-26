@@ -80,7 +80,7 @@
     [self addSubview:bgView];
 
     CGFloat labelWidth = 20 * 0.416666667;
-    CGFloat labelHeight = 20 * 0.416666667;
+    CGFloat labelHeight = 15;
     CGFloat leftInset = 9;
     CGFloat rightInset = 9;
     CGFloat topInset = 3;
@@ -88,7 +88,7 @@
 
     self.labels = [[NSMutableArray alloc] init];
 
-    UIFont *font = [UIFont systemFontOfSize:12];
+    UIFont *font = [UIFont systemFontOfSize:[self labelFontSize]];
 
     self.leftTopLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftInset, topInset, labelWidth,
         labelHeight)];
@@ -223,14 +223,18 @@
     return [self.keys containsObject:@"R"];
 }
 
+- (CGFloat)labelFontSize {
+    return 12.0f;
+}
+
 - (void)selectLabel:(int) idx {
     selectedLabel = nil;
     for (int i = 0; i < labels.count; i++) {
         UILabel *label = [labels objectAtIndex:i];
         label.highlighted = (idx == i);
-        label.font = [UIFont systemFontOfSize:12];
+        label.font = [UIFont systemFontOfSize:[self labelFontSize]];
         if (idx == i) {
-            label.font = [UIFont boldSystemFontOfSize:12];
+            label.font = [UIFont boldSystemFontOfSize:[self labelFontSize]];
             selectedLabel = label;
         }
     }
@@ -297,13 +301,12 @@
             [delegate insertText:@"\t"];
         } else if ([self isTrackPoint]) {
             // noAction
-        } else if ([self isUndoButton]) {
+        } else if ([self isUndoButton] || [selectedLabel.text isEqualToString:@"↩"]) {
             [self.delegate undoAction];
-        } else if ([self isRedoButton]) {
+        } else if ([self isRedoButton] || [selectedLabel.text isEqualToString:@"↪"]) {
             [self.delegate redoAction];
         } else {
-            NSString *textToInsert = selectedLabel.text;
-            [delegate insertText:textToInsert];
+            [delegate insertText:selectedLabel.text];
         }
     }
 
